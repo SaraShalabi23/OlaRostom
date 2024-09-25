@@ -1,9 +1,10 @@
 //script.js:
 let cart = [];
 let products = [
-    { name: 'بسكوت لوكر', price: 32, description: 'لذيذ مقرمش بدون سكر', image: src="images/kur.jpg" },
-    { name: 'بسكوت لوز', price: 50, description: 'لذيذ جدا بدوتاي سكر مضاف', image: src="images/kk.jpg" }
+    { name: 'بسكوت لوكر', price: 32, description: 'لذيذ مقرمش بدون سكر', image: 'images/kur.jpg' },
+    { name: 'بسكوت لوز', price: 50, description: 'لذيذ جدا بدوتاي سكر مضاف', image: 'images/kk.jpg' }
 ];
+
 
 // Add sample products on page load
 window.onload = () => {
@@ -287,47 +288,49 @@ document.getElementById('checkout-form').addEventListener('submit', function(e) 
 
 
 
-document.getElementById('search-bar').addEventListener('input', function(e) {
-    const query = e.target.value.toLowerCase();
-    const suggestions = products.filter(product => product.name.toLowerCase().includes(query));
-    
-    const suggestionsList = document.getElementById('suggestions');
-    suggestionsList.innerHTML = '';
+// Existing products array
 
-    if (suggestions.length > 0 && query !== '') {
-        suggestions.forEach(product => {
-            const suggestionItem = document.createElement('li');
-            suggestionItem.textContent = product.name;
-            suggestionItem.addEventListener('click', function() {
-                displayFilteredProducts(product.name); // Display only selected product
-                suggestionsList.style.display = 'none'; // Hide suggestions after click
+document.getElementById('search-bar').addEventListener('input', function(e) {
+    const query = e.target.value.trim().toLowerCase();
+    const suggestionsList = document.getElementById('suggestions');
+    suggestionsList.innerHTML = ''; // Clear previous suggestions
+
+    if (query !== '') {
+        const filteredProducts = products.filter(product => product.name.toLowerCase().includes(query));
+
+        if (filteredProducts.length > 0) {
+            suggestionsList.style.display = 'block'; // Ensure the suggestions list is visible
+            filteredProducts.forEach(product => {
+                const suggestionItem = document.createElement('li');
+                suggestionItem.textContent = product.name;
+                suggestionItem.addEventListener('click', function() {
+                    displayProduct(product);  // Display selected product
+                    suggestionsList.style.display = 'none';  // Hide suggestions after selection
+                });
+                suggestionsList.appendChild(suggestionItem);
             });
-            suggestionsList.appendChild(suggestionItem);
-        });
-        suggestionsList.style.display = 'block';
+        } else {
+            suggestionsList.style.display = 'none'; // Hide suggestions if no matches
+        }
     } else {
-        suggestionsList.style.display = 'none';
+        suggestionsList.style.display = 'none'; // Hide suggestions if input is empty
     }
 });
-function displayFilteredProducts(productName) {
+
+// Function to display the selected product in the catalog
+function displayProduct(product) {
     const catalog = document.getElementById('catalog');
-    catalog.innerHTML = '';
-
-    const filteredProducts = products.filter(product => product.name === productName);
-
-    filteredProducts.forEach(product => {
-        let productDiv = document.createElement('div');
-        productDiv.classList.add('product');
-        productDiv.innerHTML = `
-            <img src="${product.image}" alt="${product.name}" class="product-image">
+    catalog.innerHTML = `
+        <div class="product">
+            <img src="${product.image}" alt="${product.name}">
             <h2>${product.name}</h2>
-            <p class="product-price">₪${product.price}</p>
             <p>${product.description}</p>
-            <button class="add-to-cart">إضافة إلى العربة</button>
-        `;
-        catalog.appendChild(productDiv);
-    });
+            <p>السعر: ₪${product.price}</p>
+        </div>
+    `;
 }
+
+
 function updateCart() {
     let cartItemsDiv = document.getElementById('cart-items');
     let totalPrice = 0;
