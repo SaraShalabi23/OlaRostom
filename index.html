@@ -1,0 +1,78 @@
+
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>كتالوج المنتجات</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://raw.githubusercontent.com/eKoopmans/jsPDF-AutoTable/master/dist/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.14/jspdf.plugin.autotable.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/jspdf-arabic/dist/jspdf-arabic.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jspdf-arabic-font@0.0.2"></script>
+<script src="https://cdn.jsdelivr.net/npm/jspdf-customfonts@latest/dist/jspdf.customfonts.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Noto+Nastaliq+Urdu:wght@400..700&family=Vibes&display=swap" rel="stylesheet">
+
+</head>
+<body dir="rtl">
+    <header>
+        <img src="images/ola.png" alt="Ola Image">
+        <h1>نفس وابتسامة</h1>
+        <button id="admin-login">admin</button>
+    </header>
+    <input type="text" id="search-bar" placeholder="ابحث عن منتج..." autocomplete="off">
+    <ul id="suggestions" style="display: none;"></ul> <!-- This will show suggestions -->
+    
+    <section id="catalog">
+        <!-- سيتم عرض المنتجات ديناميكيًا هنا -->
+    </section>
+
+    <section id="cart">
+        <h2>عربة التسوق الخاصة بك</h2>
+        <div id="cart-items"></div>
+        <div>السعر الإجمالي: <span id="total-price">₪0</span></div>
+        <!-- Checkout Form to Capture User Details -->
+<form id="checkout-form">
+    <input type="text" id="name" placeholder="أدخل اسمك" required />
+    <input type="text" id="phone" placeholder="أدخل رقم هاتفك" required />
+    <button type="submit">للطلبية</button>
+</form>
+
+    </section>
+
+    <!-- قسم المدير المخفي -->
+    <section id="admin-section" style="display: none;">
+        <h2>لوحة التحكم: إضافة / تعديل المنتجات</h2>
+        <form id="admin-form">
+            <label for="product-name">اسم المنتج:</label>
+            <input type="text" id="product-name" required>
+        
+            <label for="product-price">السعر:</label>
+            <input type="number" id="product-price" required>
+            
+            <label for="product-desc">الوصف:</label>
+            <textarea id="product-desc" required></textarea>
+            
+            <label for="product-image">رابط الصورة:</label>
+            <input type="file" id="product-image" accept="image/*" required>
+            
+            <button type="submit">إضافة المنتج</button>
+        </form>
+         <!-- Existing products list for editing or deleting -->
+   
+    <ul id="admin-products-list"></ul>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
