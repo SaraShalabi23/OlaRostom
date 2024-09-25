@@ -193,7 +193,7 @@ async function generateNewPageAndCapture(name, phone, cart) {
     document.body.appendChild(orderSummary);
  // Create and style the share button to appear near the recipe
 const shareButton = document.createElement('button');
- shareButton.textContent = 'Share Order Summary';
+ shareButton.textContent = 'مشاركة الطلبية مع علا';
  shareButton.style.display = 'block';
  shareButton.style.margin = '20px auto';  // Center the button
  shareButton.style.padding = '10px';
@@ -235,7 +235,7 @@ const shareButton = document.createElement('button');
             if (navigator.share) {
                 navigator.share({
                     title: 'Order Summary',
-                    text: 'Check out my order summary!',
+                    text: 'مرحبا علا! هذا طلبي شكرا!',
                     files: [file],
                 }).catch(error => console.error('Error sharing:', error));
             } else {
