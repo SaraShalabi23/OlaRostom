@@ -2,7 +2,7 @@
 let cart = [];
 let products = [
     { name: 'بسكوت لوكر', price: 32, description: 'لذيذ مقرمش بدون سكر', image: src="images/kur.jpg" },
-    { name: 'بسكوت لوز', price: 50, description: 'لذيذ جدا بدوتاي سكر مضاف', image: 'https://cdn.yemek.com/mncrop/940/625/uploads/2019/04/kolay-kurabiye-guncelleme-sunum-1.jpg' }
+    { name: 'بسكوت لوز', price: 50, description: 'لذيذ جدا بدوتاي سكر مضاف', image: src="images/kk.jpg" }
 ];
 
 // Add sample products on page load
