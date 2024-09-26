@@ -5,7 +5,6 @@ let products = [
     { name: 'بسكوت لوز', price: 50, description: 'لذيذ جدا بدوتاي سكر مضاف', image: 'images/kk.jpg' }
 ];
 
-
 // Add sample products on page load
 window.onload = () => {
     displayProducts();
