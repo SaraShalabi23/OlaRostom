@@ -32,7 +32,47 @@ function displayProducts() {
         catalog.appendChild(productDiv);
     });
 }
+document.getElementById('search-bar').addEventListener('input', function (e) {
+    const query = e.target.value.trim().toLowerCase();  // Get the search query and convert it to lowercase
+    const suggestionsList = document.getElementById('suggestions');
+    suggestionsList.innerHTML = '';  // Clear previous suggestions
 
+    if (query !== '') {
+        // Filter products based on the search query, checking if any part of the name contains the query
+        const filteredProducts = products.filter(product => product.name.toLowerCase().includes(query));
+
+        // Display matching products as suggestions
+        if (filteredProducts.length > 0) {
+            suggestionsList.style.display = 'block';  // Ensure the suggestions list is visible
+            filteredProducts.forEach(product => {
+                const suggestionItem = document.createElement('li');
+                suggestionItem.textContent = product.name;
+                suggestionItem.addEventListener('click', function () {
+                    displayProduct(product);  // Display selected product in the catalog
+                    suggestionsList.style.display = 'none';  // Hide suggestions after selection
+                });
+                suggestionsList.appendChild(suggestionItem);
+            });
+        } else {
+            suggestionsList.style.display = 'none';  // Hide if no matches are found
+        }
+    } else {
+        suggestionsList.style.display = 'none';  // Hide if the search query is empty
+    }
+});
+
+// Function to display the selected product in the catalog
+function displayProduct(product) {
+    const catalog = document.getElementById('catalog');
+    catalog.innerHTML = `
+        <div class="product">
+            <img src="${product.image}" alt="${product.name}">
+            <h2>${product.name}</h2>
+            <p>${product.description}</p>
+            <p>السعر: ₪${product.price}</p>
+        </div>
+    `;
+}
 // Handle add-to-cart functionality
 document.addEventListener('click', (e) => {
     if (e.target.classList.contains('add-to-cart')) {
@@ -288,47 +328,7 @@ document.getElementById('checkout-form').addEventListener('submit', function(e) 
 
 
 
-// Existing products array
 
-document.getElementById('search-bar').addEventListener('input', function(e) {
-    const query = e.target.value.trim().toLowerCase();
-    const suggestionsList = document.getElementById('suggestions');
-    suggestionsList.innerHTML = ''; // Clear previous suggestions
-
-    if (query !== '') {
-        const filteredProducts = products.filter(product => product.name.toLowerCase().includes(query));
-
-        if (filteredProducts.length > 0) {
-            suggestionsList.style.display = 'block'; // Ensure the suggestions list is visible
-            filteredProducts.forEach(product => {
-                const suggestionItem = document.createElement('li');
-                suggestionItem.textContent = product.name;
-                suggestionItem.addEventListener('click', function() {
-                    displayProduct(product);  // Display selected product
-                    suggestionsList.style.display = 'none';  // Hide suggestions after selection
-                });
-                suggestionsList.appendChild(suggestionItem);
-            });
-        } else {
-            suggestionsList.style.display = 'none'; // Hide suggestions if no matches
-        }
-    } else {
-        suggestionsList.style.display = 'none'; // Hide suggestions if input is empty
-    }
-});
-
-// Function to display the selected product in the catalog
-function displayProduct(product) {
-    const catalog = document.getElementById('catalog');
-    catalog.innerHTML = `
-        <div class="product">
-            <img src="${product.image}" alt="${product.name}">
-            <h2>${product.name}</h2>
-            <p>${product.description}</p>
-            <p>السعر: ₪${product.price}</p>
-        </div>
-    `;
-}
 
 
 function updateCart() {
