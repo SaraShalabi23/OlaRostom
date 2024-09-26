@@ -31,6 +31,7 @@ function displayProducts() {
         catalog.appendChild(productDiv);
     });
 }
+// Updated Search Functionality
 document.getElementById('search-bar').addEventListener('input', function (e) {
     const query = e.target.value.trim().toLowerCase();  // Get the search query and convert it to lowercase
     const suggestionsList = document.getElementById('suggestions');
@@ -47,7 +48,7 @@ document.getElementById('search-bar').addEventListener('input', function (e) {
                 const suggestionItem = document.createElement('li');
                 suggestionItem.textContent = product.name;
                 suggestionItem.addEventListener('click', function () {
-                    displayProduct(product);  // Display selected product in the catalog
+                    displaySelectedProduct(product);  // Display selected product with the original size and button
                     suggestionsList.style.display = 'none';  // Hide suggestions after selection
                 });
                 suggestionsList.appendChild(suggestionItem);
@@ -60,17 +61,20 @@ document.getElementById('search-bar').addEventListener('input', function (e) {
     }
 });
 
-// Function to display the selected product in the catalog
-function displayProduct(product) {
+// Function to display the selected product in the catalog, with original styling and button
+function displaySelectedProduct(product) {
     const catalog = document.getElementById('catalog');
-    catalog.innerHTML = `
-        <div class="product">
-            <img src="${product.image}" alt="${product.name}">
-            <h2>${product.name}</h2>
-            <p>${product.description}</p>
-            <p>السعر: ₪${product.price}</p>
-        </div>
+    catalog.innerHTML = '';  // Clear the catalog area to show the selected product
+    let productDiv = document.createElement('div');
+    productDiv.classList.add('product');  // Reuse the same class for styling consistency
+    productDiv.innerHTML = `
+        <img src="${product.image}" alt="${product.name}" class="product-image">
+        <h2>${product.name}</h2>
+        <p class="product-price">₪${product.price}</p>
+        <p>${product.description}</p>
+        <button class="add-to-cart">إضافة إلى العربة</button>
     `;
+    catalog.appendChild(productDiv);
 }
 // Handle add-to-cart functionality
 document.addEventListener('click', (e) => {
