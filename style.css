@@ -302,7 +302,7 @@ form button[type="submit"] {
         font-size: 14px; /* Adjust font size */
         left: 50%; /* Center properly */
         bottom: 10px; /* Move it higher */
-        transform: translateX(-50%); /* Center horizontally */
+        transform: translateX(-50%); /* Cente horizontally */
 
     }
 }
