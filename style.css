@@ -300,8 +300,10 @@ form button[type="submit"] {
     #toast {
         min-width: 90%; /* Make it wider for mobile */
         font-size: 14px; /* Adjust font size */
-        left: 5%; /* Center properly */
+        left: 50%; /* Center properly */
         bottom: 10px; /* Move it higher */
+        transform: translateX(-50%); /* Center horizontally */
+
     }
 }
 #scroll-to-cart {
