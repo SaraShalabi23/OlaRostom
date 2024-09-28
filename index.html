@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>كتالوج المنتجات</title>
     <link rel="stylesheet" href="style.css">
+   
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://raw.githubusercontent.com/eKoopmans/jsPDF-AutoTable/master/dist/jspdf.plugin.autotable.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.14/jspdf.plugin.autotable.min.js"></script>
@@ -73,7 +74,71 @@
    
     <ul id="admin-products-list"></ul>
     </section>
+    <div id="edit-modal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>تعديل المنتج</h2>
+            <form id="edit-form">
+                <label for="edit-product-name">اسم المنتج:</label>
+                <input type="text" id="edit-product-name" required>
+                <label for="edit-product-price">السعر:</label>
+                <input type="number" id="edit-product-price" required>
+                <label for="edit-product-desc">الوصف:</label>
+                <textarea id="edit-product-desc" required></textarea>
+                <label for="edit-product-image">الصورة (اختياري):</label>
+                <input type="file" id="edit-product-image">
+                <button type="submit">تحديث المنتج</button>
+            </form>
+        </div>
+    </div>
+    
+    <style>
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        padding-top: 100px;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.4);
+    }
+    .modal-content {
+        background-color: #fefefe;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 50%;
+    }
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+    </style>
+    <button id="scroll-to-cart" class="floating-cart-btn">🛒</button>
+    <div id="toast" class="toast">تمت إضافة المنتج إلى العربة!</div>
 
-    <script src="script.js"></script>
+    <!-- Firebase App (v8) -->
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+
+<!-- Firebase Realtime Database -->
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
+<!-- Firebase Storage -->
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+
+    <script  src="script.js"></script>
+   
+    
 </body>
 </html>
