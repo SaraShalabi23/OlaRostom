@@ -295,5 +295,42 @@ form button[type="submit"] {
     100% { opacity: 0; }
 }
 
+/* For mobile */
+@media (max-width: 600px) {
+    #toast {
+        min-width: 90%; /* Make it wider for mobile */
+        font-size: 14px; /* Adjust font size */
+        left: 5%; /* Center properly */
+        bottom: 10px; /* Move it higher */
+    }
+}
+#scroll-to-cart {
+    position: fixed;  /* Ensure the button is fixed on the screen */
+    bottom: 20px;  /* Adjust the distance from the bottom */
+    right: 20px;  /* Adjust the distance from the right */
+    background-color: #4CAF50; /* Button background color */
+    color: white; /* Button text color */
+    padding: 15px;  /* Button padding for mobile and desktop */
+    border-radius: 50%;  /* Make the button round */
+    border: none;  /* Remove borders */
+    font-size: 24px;  /* Make the button's icon/text larger */
+    cursor: pointer;  /* Show pointer when hovering over the button */
+    z-index: 1000;  /* Ensure the button stays on top of other elements */
+    transition: background-color 0.3s ease;
+}
+
+#scroll-to-cart:hover {
+    background-color: #45a049; /* Slightly change background on hover */
+}
+
+/* Make adjustments for smaller screens */
+@media (max-width: 600px) {
+    #scroll-to-cart {
+        padding: 12px;  /* Slightly smaller padding for mobile */
+        font-size: 20px;  /* Smaller icon/text size for mobile */
+        bottom: 15px;  /* Adjust positioning for mobile */
+        right: 15px;
+    }
+}
 
 
