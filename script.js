@@ -575,6 +575,10 @@ document.getElementById('admin-form').addEventListener('submit', (e) => {
                 description: description,
                 image: imageUrl  // Use the image URL from Firebase Storage
             });
+            showToast('تمت اضافة المنتج بنجاح');
+            document.getElementById('admin-form').reset();
+
+
         });
     }
 });
