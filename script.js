@@ -545,6 +545,7 @@ document.getElementById('edit-form').addEventListener('submit', (e) => {
 // Admin login
 document.getElementById('admin-login').addEventListener('click', () => {
     let password = prompt('أدخل كلمة مرور المدير:');
+    //adminPass
     if (password === 'ola1984') {
         document.getElementById('admin-section').style.display = 'block';
         document.querySelectorAll('.admin-actions').forEach(action => action.style.display = 'block');
