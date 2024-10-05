@@ -147,8 +147,10 @@
             const userAgent = navigator.userAgent || navigator.vendor || window.opera;
             return /instagram|fbav|fbios|facebook|snapchat|line|mqqbrowser/i.test(userAgent);
         }
-
-        if (isInAppBrowser()) {
+        function isAndroid() {
+    return /android/i.test(navigator.userAgent);
+}
+if (isAndroid() && isInAppBrowser()) {
     const banner = document.createElement('div');
     banner.innerHTML = `
         <div id="temp-banner" style="position: fixed; top: 0; left: 0; right: 0; background: #ff9800; color: white; text-align: center; padding: 10px; z-index: 1000;">
