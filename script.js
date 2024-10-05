@@ -538,7 +538,7 @@ async function generateNewPageAndCapture(name, phone, cart) {
         link.click();  // Trigger the download
 
         // Show a popup that the image has been saved
-        showPopupMessage("تم حفظ صورة الطلبية لجهازك!أرجو مشاركتها مع عُلا لتأكيد الطلب!⬇️");
+        showPopupMessage("تم حفظ صورة الطلبية!أرجو مشاركتها مع عُلا لتأكيد الطلب!⬇️");
 
         // Now display the share button
         displayShareButton(orderSummary, image);
@@ -571,7 +571,7 @@ function showPopupMessage(message) {
     // Automatically remove the popup after 2 seconds
     setTimeout(() => {
         popup.remove();
-    }, 2000);  // Popup disappears after 2 seconds
+    }, 3000);  // Popup disappears after 2 seconds
 }
 
 // Function to display the share button under the recipe
