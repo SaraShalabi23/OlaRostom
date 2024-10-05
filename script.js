@@ -530,13 +530,13 @@ async function generateNewPageAndCapture(name, phone, cart) {
         useCORS: true, // Ensure cross-origin images are captured
     }).then(canvas => {
         const image = canvas.toDataURL('image/png');
-        
+        /*
         // Download the image automatically
         const link = document.createElement('a');
         link.href = image;
         link.download = 'order_summary.png';  // File name for the saved image
         link.click();  // Trigger the download
-
+*/
         // Show a popup that the image has been saved
         showPopupMessage("تم حفظ صورة الطلبية!أرجو مشاركتها مع عُلا لتأكيد الطلب!⬇️");
 
