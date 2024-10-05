@@ -1,313 +1,4 @@
-/*
-const firebaseConfig = {
-    apiKey: "AIzaSyDmxUW87ZN9bvGr8JiphIOEempZ_tU9Su0",
-    authDomain: "olarostomcake.firebaseapp.com",
-    databaseURL: "https://olarostomcake-default-rtdb.firebaseio.com", // Include database URL
-    projectId: "olarostomcake",
-    storageBucket: "olarostomcake.appspot.com",
-    messagingSenderId: "32874436408",
-    appId: "1:32874436408:web:de1e7c4ef92dd59b9353cd",
-    measurementId: "G-K8VX4Z84LE"
-};
 
-// Initialize Firebase
-
-firebase.initializeApp(firebaseConfig);
-const database = firebase.database();
-const storage = firebase.storage();
-let cart = [];
-// Firebase Configuration
-
-
-// Fetch products from Firebase on page load
-window.onload = () => {
-    getProductsFromDatabase();
-};
-
-// Function to display products from the database
-function displayProducts(products) {
-    const catalog = document.getElementById('catalog');
-    catalog.innerHTML = '';
-
-    products.forEach((product, index) => {
-        let productDiv = document.createElement('div');
-        productDiv.classList.add('product');
-        productDiv.innerHTML = `
-            <img src="${product.image}" alt="${product.name}" class="product-image">
-            <h2>${product.name}</h2>
-            <p class="product-price">₪${product.price}</p>
-            <p>${product.description}</p>
-            <button class="add-to-cart">إضافة إلى العربة</button>
-            <div class="admin-actions" style="display: none;">
-                <button class="edit-product" data-index="${index}">تعديل</button>
-                <button class="delete-product" data-index="${index}">حذف</button>
-            </div>
-        `;
-        catalog.appendChild(productDiv);
-    });
-}
-
-// Fetch products from Firebase Realtime Database
-function getProductsFromDatabase() {
-    const productsRef = database.ref('products');
-    productsRef.on('value', (snapshot) => {
-        const products = [];
-        snapshot.forEach(childSnapshot => {
-            products.push(childSnapshot.val());
-        });
-        displayProducts(products);
-    });
-}
-
-// Handle add-to-cart functionality
-document.addEventListener('click', (e) => {
-    if (e.target.classList.contains('add-to-cart')) {
-        let productElement = e.target.closest('.product');
-        let productName = productElement.querySelector('h2').textContent;
-        let productPrice = parseFloat(productElement.querySelector('.product-price').textContent.replace('₪', ''));
-        let productImage = productElement.querySelector('img').src;
-        let quantity = 1;
-
-        let productInCart = cart.find(item => item.name === productName);
-        if (productInCart) {
-            productInCart.quantity += quantity;
-        } else {
-            cart.push({ name: productName, price: productPrice, quantity: quantity, image: productImage });
-        }
-        updateCart();
-    }
-});
-
-// Admin login
-document.getElementById('admin-login').addEventListener('click', () => {
-    let password = prompt('أدخل كلمة مرور المدير:');
-    if (password === 'admin123') {
-        document.getElementById('admin-section').style.display = 'block';
-        document.querySelectorAll('.admin-actions').forEach(action => action.style.display = 'block');
-    } else {
-        alert('كلمة مرور خاطئة!');
-    }
-});
-
-// Admin form for adding new products
-document.getElementById('admin-form').addEventListener('submit', (e) => {
-    e.preventDefault();
-    
-    let name = document.getElementById('product-name').value;
-    let price = document.getElementById('product-price').value;
-    let description = document.getElementById('product-desc').value;
-    let imageFile = document.getElementById('product-image').files[0]; // Get the uploaded image file
-
-    if (imageFile) {
-        // Upload the image to Firebase Storage
-        uploadImageToStorage(imageFile, (imageUrl) => {
-            // After uploading the image, add the product with the image URL to Firebase Database
-            addProductToDatabase({
-                name: name,
-                price: price,
-                description: description,
-                image: imageUrl  // Use the image URL from Firebase Storage
-            });
-        });
-    }
-});
-
-
-// Upload image to Firebase Storage
-function uploadImageToStorage(file, callback) {
-    const storageRef = storage.ref('images/' + file.name);  // Use a unique name for each image
-    storageRef.put(file).then(snapshot => {
-        snapshot.ref.getDownloadURL().then(url => {
-            callback(url);  // Pass the URL to the callback function after successful upload
-        });
-    }).catch(error => {
-        console.error('Error uploading image: ', error);  // Handle upload errors
-    });
-}
-
-
-// Add product to Firebase Realtime Database
-function addProductToDatabase(product) {
-    const productsRef = database.ref('products').push();
-    productsRef.set(product);
-}
-
-// Cart functionality
-function updateCart() {
-    let cartItemsDiv = document.getElementById('cart-items');
-    let totalPrice = 0;
-    cartItemsDiv.innerHTML = '';
-
-    cart.forEach((item, index) => {
-        let itemDiv = document.createElement('div');
-        itemDiv.classList.add('cart-item');
-
-        let img = document.createElement('img');
-        img.src = item.image;
-
-        let nameDiv = document.createElement('div');
-        nameDiv.textContent = `${item.name}`;
-
-        let quantityInput = document.createElement('input');
-        quantityInput.type = 'number';
-        quantityInput.value = item.quantity;
-        quantityInput.min = 1;
-        quantityInput.addEventListener('change', function () {
-            const newQuantity = parseInt(this.value);
-            if (newQuantity > 0) {
-                cart[index].quantity = newQuantity;
-            }
-            updateCart();
-        });
-
-        let priceDiv = document.createElement('div');
-        priceDiv.textContent = `₪${(item.price * item.quantity).toFixed(2)}`;
-
-        let removeButton = document.createElement('button');
-        removeButton.innerHTML = '🗑️';
-        removeButton.classList.add('remove-button');
-        removeButton.addEventListener('click', function () {
-            cart.splice(index, 1);
-            updateCart();
-        });
-
-        itemDiv.appendChild(img);
-        itemDiv.appendChild(nameDiv);
-        itemDiv.appendChild(quantityInput);
-        itemDiv.appendChild(priceDiv);
-        itemDiv.appendChild(removeButton);
-
-        cartItemsDiv.appendChild(itemDiv);
-        totalPrice += item.price * item.quantity;
-    });
-
-    document.getElementById('total-price').textContent = `₪${totalPrice.toFixed(2)}`;
-}
-
-// Handle checkout and generate the order summary
-// Handle checkout and generate the order summary
-document.getElementById('checkout-form').addEventListener('submit', (e) => {
-    e.preventDefault();
-    let name = document.getElementById('name').value;
-    let phone = document.getElementById('phone').value;
-
-    generateNewPageAndCapture(name, phone, cart);
-});
-
-// Function to generate a new page and capture the content as an image
-async function generateNewPageAndCapture(name, phone, cart) {
-    // Create the page content with cart details and append it to the body
-    const orderSummary = document.createElement('div');
-    orderSummary.style.border = '2px solid black';  // Add border around the content
-    orderSummary.style.padding = '20px';  // Add padding inside the border
-    orderSummary.style.maxWidth = '600px';  // Limit the width for better readability
-    orderSummary.style.margin = '20px auto';  // Center the content
-    orderSummary.style.backgroundColor = '#fff';  // Ensure background color is white
-
-    orderSummary.innerHTML = `
-        <h2 style="text-align: center; font-family: 'Amiri', sans-serif;">ملخص الطلب</h2>
-        <p style="text-align: right; font-family: 'Amiri', sans-serif;">الاسم: ${name}</p>
-        <p style="text-align: right; font-family: 'Amiri', sans-serif;">رقم الهاتف: ${phone}</p>
-        <table style="width: 100%; border-collapse: collapse; text-align: center; font-family: 'Amiri', sans-serif;">
-            <thead>
-                <tr>
-                    <th style="border: 1px solid black; padding: 10px;">الصورة</th>
-                    <th style="border: 1px solid black; padding: 10px;">اسم المنتج</th>
-                    <th style="border: 1px solid black; padding: 10px;">السعر</th>
-                    <th style="border: 1px solid black; padding: 10px;">الكمية</th>
-                </tr>
-            </thead>
-            <tbody>
-                ${cart.map(item => `
-                    <tr>
-                        <td style="border: 1px solid black; padding: 10px;">
-                            <img src="${item.image}" alt="${item.name}" style="width: 50px; height: 50px; object-fit: contain;">
-                        </td>
-                        <td style="border: 1px solid black; padding: 10px;">${item.name}</td>
-                        <td style="border: 1px solid black; padding: 10px;">₪  ${item.price.toFixed(2)}</td>
-                        <td style="border: 1px solid black; padding: 10px;">${item.quantity}</td>
-                    </tr>
-                `).join('')}
-            </tbody>
-        </table>
-        <p id="total-price" style="text-align: right; font-weight: bold; font-family: 'Amiri', sans-serif; margin-top: 20px;">
-            السعر الإجمالي: ₪${cart.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2)}
-        </p>
-    `;
-
-    // Append the summary to the body temporarily
-    document.body.appendChild(orderSummary);
-
-    // Create and style the share button to appear near the recipe
-    const shareButton = document.createElement('button');
-    shareButton.textContent = 'مشاركة الطلبية مع علا';
-    shareButton.style.display = 'block';
-    shareButton.style.margin = '20px auto';  // Center the button
-    shareButton.style.padding = '10px';
-    shareButton.style.backgroundColor = '#4CAF50'; // Green background
-    shareButton.style.color = 'white'; // White text
-    shareButton.style.border = 'none';
-    shareButton.style.borderRadius = '5px'; // Rounded corners
-    shareButton.style.cursor = 'pointer';  // Pointer cursor on hover
-    document.body.appendChild(shareButton);
-
-    function loadImagesAndCapture() {
-        const images = Array.from(orderSummary.querySelectorAll('img'));
-        const promises = images.map(img => {
-            return new Promise(resolve => {
-                if (img.complete) {
-                    resolve();
-                } else {
-                    img.onload = resolve;
-                    img.onerror = resolve;
-                }
-            });
-        });
-        return Promise.all(promises);
-    }
-
-    shareButton.addEventListener('click', async () => {
-        console.log("Share button clicked");
-        await loadImagesAndCapture();
-
-        // Use html2canvas to capture the recipe as an image
-        html2canvas(orderSummary, {
-            scale: 2, // Ensure high resolution for the image
-            useCORS: true, // Ensure cross-origin images are captured
-        }).then(canvas => {
-            const image = canvas.toDataURL('image/png');
-            const blob = dataURItoBlob(image);
-            const file = new File([blob], 'order_summary.png', { type: 'image/png' });
-
-            // Use Web Share API to share the image
-            if (navigator.share) {
-                navigator.share({
-                    title: 'Order Summary',
-                    text: 'مرحبا علا! هذا طلبي شكرا!',
-                    files: [file],
-                }).catch(error => console.error('Error sharing:', error));
-            } else {
-                alert('Your browser does not support the Web Share API.');
-            }
-        }).catch(error => {
-            console.error('Error capturing the screen:', error);
-        });
-    });
-}
-
-// Convert data URI to Blob
-function dataURItoBlob(dataURI) {
-    const byteString = atob(dataURI.split(',')[1]);
-    const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
-    const arrayBuffer = new ArrayBuffer(byteString.length);
-    const uintArray = new Uint8Array(arrayBuffer);
-    for (let i = 0; i < byteString.length; i++) {
-        uintArray[i] = byteString.charCodeAt(i);
-    }
-    return new Blob([arrayBuffer], { type: mimeString });
-}
-
-*/
 
 const firebaseConfig = {
     apiKey: "AIzaSyDmxUW87ZN9bvGr8JiphIOEempZ_tU9Su0",
@@ -670,7 +361,7 @@ document.getElementById('checkout-form').addEventListener('submit', (e) => {
     }, 500); // Delay to ensure the order summary is generated before scrolling
 });
 
-
+/*
 // Function to generate a new page and capture the content as an image
 async function generateNewPageAndCapture(name, phone, cart) {
     const currentDate = new Date();
@@ -730,7 +421,7 @@ async function generateNewPageAndCapture(name, phone, cart) {
     shareButton.style.borderRadius = '5px'; // Rounded corners
     shareButton.style.cursor = 'pointer';  // Pointer cursor on hover
     document.body.appendChild(shareButton);
-
+*/
     function loadImagesAndCapture() {
         const images = Array.from(orderSummary.querySelectorAll('img'));
         const promises = images.map(img => {
@@ -746,7 +437,7 @@ async function generateNewPageAndCapture(name, phone, cart) {
         });
         return Promise.all(promises);
     }
-
+/*
     shareButton.addEventListener('click', async () => {
         console.log("Share button clicked");
         await loadImagesAndCapture();
@@ -787,6 +478,145 @@ function dataURItoBlob(dataURI) {
     }
     return new Blob([arrayBuffer], { type: mimeString });
 }
+*/
+async function generateNewPageAndCapture(name, phone, cart) {
+    const currentDate = new Date();
+    const formattedDate = `${String(currentDate.getDate()).padStart(2, '0')}/${String(currentDate.getMonth() + 1).padStart(2, '0')}/${currentDate.getFullYear()}`;
+    const orderSummary = document.createElement('div');
+    orderSummary.style.border = '2px solid black';  // Add border around the content
+    orderSummary.style.padding = '20px';  // Add padding inside the border
+    orderSummary.style.maxWidth = '600px';  // Limit the width for better readability
+    orderSummary.style.margin = '20px auto';  // Center the content
+    orderSummary.style.backgroundColor = '#fff';  // Ensure background color is white
+
+    orderSummary.innerHTML = `
+        <h2 style="text-align: center; font-family: 'Amiri', sans-serif;">ملخص الطلب</h2>
+        <p style="text-align: right; font-family: 'Amiri', sans-serif;">الاسم: ${name}</p>
+        <p style="text-align: right; font-family: 'Amiri', sans-serif;">رقم الهاتف: ${phone}</p>
+        <p style="text-align: right; font-family: 'Amiri', sans-serif;">التاريخ: ${formattedDate}</p> <!-- Add current date here -->
+
+        <table style="width: 100%; border-collapse: collapse; text-align: center; font-family: 'Amiri', sans-serif;">
+            <thead>
+                <tr>
+                    <th style="border: 1px solid black; padding: 10px;">الصورة</th>
+                    <th style="border: 1px solid black; padding: 10px;">اسم المنتج</th>
+                    <th style="border: 1px solid black; padding: 10px;">السعر</th>
+                    <th style="border: 1px solid black; padding: 10px;">الكمية</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${cart.map(item => `
+                    <tr>
+                        <td style="border: 1px solid black; padding: 10px;">
+                            <img src="${item.image}" alt="${item.name}" style="width: 50px; height: 50px; object-fit: contain;">
+                        </td>
+                        <td style="border: 1px solid black; padding: 10px;">${item.name}</td>
+                        <td style="border: 1px solid black; padding: 10px;">₪  ${item.price.toFixed(2)}</td>
+                        <td style="border: 1px solid black; padding: 10px;">${item.quantity}</td>
+                    </tr>
+                `).join('')}
+            </tbody>
+        </table>
+        <p id="total-price" style="text-align: right; font-weight: bold; font-family: 'Amiri', sans-serif; margin-top: 20px;">
+            السعر الإجمالي: ₪${cart.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2)}
+        </p>
+    `;
+
+    document.body.appendChild(orderSummary);
+
+    // Use html2canvas to capture the recipe as an image
+    html2canvas(orderSummary, {
+        scale: 2, // Ensure high resolution for the image
+        useCORS: true, // Ensure cross-origin images are captured
+    }).then(canvas => {
+        const image = canvas.toDataURL('image/png');
+        
+        // Download the image automatically
+        const link = document.createElement('a');
+        link.href = image;
+        link.download = 'order_summary.png';  // File name for the saved image
+        link.click();  // Trigger the download
+
+        // Show a popup that the image has been saved
+        showPopupMessage("تم حفظ صورة الطلبية لجهازك! أرجو مشاركتها مع عُلا! شكرا");
+
+        // Now display the share button
+        displayShareButton(orderSummary, image);
+    }).catch(error => {
+        console.error('Error capturing the screen:', error);
+    });
+}
+
+// Function to show a popup message
+// Function to show a popup message in the center and larger
+function showPopupMessage(message) {
+    const popup = document.createElement('div');
+    popup.textContent = message;
+
+    // Style the popup to be larger and centered
+    popup.style.position = 'fixed';
+    popup.style.top = '50%';
+    popup.style.left = '50%';
+    popup.style.transform = 'translate(-50%, -50%)'; // Center the popup
+    popup.style.backgroundColor = '#4CAF50';
+    popup.style.color = '#fff';
+    popup.style.padding = '20px 40px';  // Larger padding for bigger popup
+    popup.style.borderRadius = '10px';  // Slightly bigger border radius for a more modern look
+    popup.style.zIndex = '1000';
+    popup.style.fontSize = '24px';  // Larger font size
+    popup.style.textAlign = 'center';  // Center the text
+
+    document.body.appendChild(popup);
+
+    // Automatically remove the popup after 2 seconds
+    setTimeout(() => {
+        popup.remove();
+    }, 2000);  // Popup disappears after 2 seconds
+}
+
+// Function to display the share button under the recipe
+function displayShareButton(orderSummary, image) {
+    const shareButton = document.createElement('button');
+    shareButton.textContent = 'مشاركة الطلبية مع علا';
+    shareButton.style.display = 'block';
+    shareButton.style.margin = '20px auto';  // Center the button
+    shareButton.style.padding = '10px';
+    shareButton.style.backgroundColor = '#4CAF50'; // Green background
+    shareButton.style.color = 'white'; // White text
+    shareButton.style.border = 'none';
+    shareButton.style.borderRadius = '5px'; // Rounded corners
+    shareButton.style.cursor = 'pointer';  // Pointer cursor on hover
+    document.body.appendChild(shareButton);
+
+    shareButton.addEventListener('click', () => {
+        const blob = dataURItoBlob(image);
+        const file = new File([blob], 'order_summary.png', { type: 'image/png' });
+
+        // Use Web Share API to share the image
+        if (navigator.share) {
+            navigator.share({
+                title: 'Order Summary',
+                text: 'مرحباً علا! هذا طلبي شكراً!',
+                files: [file],
+            }).catch(error => console.error('Error sharing:', error));
+        } else {
+            alert('Your browser does not support the Web Share API.');
+        }
+    });
+}
+
+// Convert data URI to Blob
+function dataURItoBlob(dataURI) {
+    const byteString = atob(dataURI.split(',')[1]);
+    const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+    const arrayBuffer = new ArrayBuffer(byteString.length);
+    const uintArray = new Uint8Array(arrayBuffer);
+    for (let i = 0; i < byteString.length; i++) {
+        uintArray[i] = byteString.charCodeAt(i);
+    }
+    return new Blob([arrayBuffer], { type: mimeString });
+}
+
 document.getElementById('search-bar').addEventListener('input', function (e) {
     const query = e.target.value.trim().toLowerCase();  // Get the search query and convert it to lowercase
     const suggestionsList = document.getElementById('suggestions');
