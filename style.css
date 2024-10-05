@@ -335,4 +335,11 @@ form button[type="submit"] {
     }
 }
 
+.by-line {
+    font-size: 11px; /* Smaller font size */
+    color: #666666cf; /* Lighter color */
+    margin-top: -10px; /* Adjust the space between the title and by-line */
+}
+
+
 
