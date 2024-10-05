@@ -542,6 +542,7 @@ async function generateNewPageAndCapture(name, phone, cart) {
 
         // Now display the share button
         displayShareButton(orderSummary, image);
+        
     }).catch(error => {
         console.error('Error capturing the screen:', error);
     });
@@ -587,6 +588,7 @@ function displayShareButton(orderSummary, image) {
     shareButton.style.borderRadius = '5px'; // Rounded corners
     shareButton.style.cursor = 'pointer';  // Pointer cursor on hover
     document.body.appendChild(shareButton);
+    shareButton.scrollIntoView({ behavior: 'smooth', block: 'end' });
 
     shareButton.addEventListener('click', () => {
         const blob = dataURItoBlob(image);
