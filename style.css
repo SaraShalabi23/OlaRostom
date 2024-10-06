@@ -340,6 +340,40 @@ form button[type="submit"] {
     color: #666666cf; /* Lighter color */
     margin-top: -10px; /* Adjust the space between the title and by-line */
 }
-
-
+.add-to-cart {
+    background-color: #fbeee0;
+    border: 2px solid #422800;
+    border-radius: 20px; /* Reduced the border radius for a smaller button */
+    box-shadow: #422800 3px 3px 0 0; /* Adjusted shadow size */
+    color: #422800;
+    cursor: pointer;
+    display: inline-block;
+    font-weight: 600;
+    font-size: 14px; /* Reduced font size */
+    padding: 0 12px; /* Reduced padding */
+    line-height: 40px; /* Reduced line height */
+    text-align: center;
+    text-decoration: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    transition: .3s ease-in-out;
+  }
+  
+  .add-to-cart:hover {
+    background-color: #fff;
+  }
+  
+  .add-to-cart:active {
+    box-shadow: #422800 2px 2px 0 0; /* Adjusted shadow for the active state */
+    transform: translate(2px, 2px);
+  }
+  
+  @media (min-width: 768px) {
+    .add-to-cart {
+      min-width: 100px; /* Reduced minimum width */
+      padding: 0 18px; /* Adjusted padding */
+    }
+  }
+  
 
