@@ -538,7 +538,7 @@ async function generateNewPageAndCapture(name, phone, cart) {
         link.click();  // Trigger the download
 */
         // Show a popup that the image has been saved
-        showPopupMessage("تم حفظ صورة الطلبية!أرجو مشاركتها مع عُلا لتأكيد الطلب!⬇️");
+        showPopupMessage("شكرا لكم! أرجو مشاركة ملخص الطلبية مع علا! ⬇️");
 
         // Now display the share button
         displayShareButton(orderSummary, image);
