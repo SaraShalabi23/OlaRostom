@@ -376,4 +376,41 @@ form button[type="submit"] {
     }
   }
   
-
+  button[type="submit"] {
+    background-color: #fbeee0 !important; /* Ensure background color applies */
+    border: 2px solid #422800;
+    border-radius: 15px; /* Smaller border radius */
+    box-shadow: #422800 2px 2px 0 0;
+    color: #422800 !important; /* Ensure text color applies */
+    cursor: pointer;
+    display: inline-block;
+    font-weight: 600;
+    font-size: 12px; /* Smaller font size */
+    padding: 0 8px; /* Reduced padding */
+    line-height: 30px; /* Reduced line height for smaller button size */
+    text-align: center;
+    text-decoration: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    transition: .3s ease-in-out;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #fff !important; /* Ensure hover color applies */
+  }
+  
+  button[type="submit"]:active {
+    box-shadow: #422800 1px 1px 0 0;
+    transform: translate(1px, 1px);
+  }
+  
+  @media (min-width: 768px) {
+    button[type="submit"] {
+      min-width: 80px; /* Smaller minimum width */
+      padding: 0 10px;
+    }
+  }
+  
+  
+  

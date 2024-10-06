@@ -582,10 +582,18 @@ function displayShareButton(orderSummary, image) {
     shareButton.style.display = 'block';
     shareButton.style.margin = '20px auto';  // Center the button
     shareButton.style.padding = '10px';
-    shareButton.style.backgroundColor = '#4CAF50'; // Green background
-    shareButton.style.color = 'white'; // White text
-    shareButton.style.border = 'none';
-    shareButton.style.borderRadius = '5px'; // Rounded corners
+    shareButton.style.backgroundColor = '#fbeee0'; // Same background color
+    shareButton.style.color = '#422800'; // Text color
+    shareButton.style.border = '2px solid #422800'; // Same border
+    shareButton.style.borderRadius = '30px'; // Same border radius
+    shareButton.style.fontSize = '16px'; // Font size
+    shareButton.style.textAlign = 'center'; // Center text
+    shareButton.style.lineHeight = '1.5'; // Adjust line height
+    shareButton.style.fontWeight = '600'; // Font weight
+
+    shareButton.style.transition = '0.3s ease-in-out'; // Smooth transitions
+    shareButton.style.margin = '20px auto';  // Center the button horizontally
+    shareButton.style.width = 'fit-content'; // Automatically adjust button width
     shareButton.style.cursor = 'pointer';  // Pointer cursor on hover
     document.body.appendChild(shareButton);
     shareButton.scrollIntoView({ behavior: 'smooth', block: 'end' });
