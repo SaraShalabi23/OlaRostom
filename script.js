@@ -538,10 +538,11 @@ async function generateNewPageAndCapture(name, phone, cart) {
         link.click();  // Trigger the download
 */
         // Show a popup that the image has been saved
+        displayShareButton(orderSummary, image);
         showPopupMessage("شكرا لكم! أرجو مشاركة ملخص الطلبية مع علا! ⬇️");
 
         // Now display the share button
-        displayShareButton(orderSummary, image);
+       // displayShareButton(orderSummary, image);
         
     }).catch(error => {
         console.error('Error capturing the screen:', error);
