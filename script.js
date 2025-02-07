@@ -346,7 +346,6 @@ function updateCart() {
 
     document.getElementById('total-price').textContent = `₪${totalPrice.toFixed(2)}`;
 }
-
 // Handle checkout and generate the order summary
 document.getElementById('checkout-form').addEventListener('submit', (e) => {
     e.preventDefault();
@@ -354,7 +353,6 @@ document.getElementById('checkout-form').addEventListener('submit', (e) => {
     let phone = document.getElementById('phone').value;
 
     generateNewPageAndCapture(name, phone, cart);
-
     // Automatically scroll down to the order summary
     setTimeout(() => {
         document.querySelector('html').scrollIntoView({ behavior: 'smooth', block: 'end' });
@@ -437,6 +435,7 @@ async function generateNewPageAndCapture(name, phone, cart) {
         });
         return Promise.all(promises);
     }
+
 /*
     shareButton.addEventListener('click', async () => {
         console.log("Share button clicked");
@@ -523,7 +522,6 @@ async function generateNewPageAndCapture(name, phone, cart) {
     `;
 
     document.body.appendChild(orderSummary);
-
     // Use html2canvas to capture the recipe as an image
     html2canvas(orderSummary, {
         scale: 2, // Ensure high resolution for the image
@@ -539,6 +537,9 @@ async function generateNewPageAndCapture(name, phone, cart) {
 */
         // Show a popup that the image has been saved
         displayShareButton(orderSummary, image);
+        setTimeout(() => {
+            document.querySelector('html').scrollIntoView({ behavior: 'smooth', block: 'end' });
+        }, 100);
         showPopupMessage("شكرا لكم! أرجو مشاركة ملخص الطلبية مع علا! ⬇️");
 
         // Now display the share button
