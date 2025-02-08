@@ -608,7 +608,7 @@ function displayShareButton(orderSummary, image) {
         if (navigator.share) {
             navigator.share({
                 title: 'Order Summary',
-                text: 'مرحباً علا! هذا طلبي شكراً!',
+                text: 'مرحباً علا! لقد أكملت طلبي، شكرًا لك! بانتظار استلامه قريبًا 😊',
                 files: [file],
             }).catch(error => console.error('Error sharing:', error));
         } else {
