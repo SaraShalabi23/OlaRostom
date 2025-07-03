@@ -1,5 +1,4 @@
 
-
 const firebaseConfig = {
     apiKey: "AIzaSyDmxUW87ZN9bvGr8JiphIOEempZ_tU9Su0",
     authDomain: "olarostomcake.firebaseapp.com",
@@ -37,42 +36,6 @@ window.onload = () => {
     getAllProductNames(); // Fetch product names for search
 
 };
-/*
-// Function to display products from the database
-function displayProducts(products) {
-    const catalog = document.getElementById('catalog');
-    catalog.innerHTML = '';
-
-    products.forEach((product, index) => {
-        let productDiv = document.createElement('div');
-        productDiv.classList.add('product');
-        productDiv.innerHTML = `
-            <img src="${product.image}" alt="${product.name}" class="product-image">
-            <h2>${product.name}</h2>
-            <p class="product-price">₪${product.price}</p>
-            <p>${product.description}</p>
-            <button class="add-to-cart">إضافة إلى العربة</button>
-            <div class="admin-actions" style="display: none;">
-                <button class="edit-product" data-index="${index}">تعديل</button>
-                <button class="delete-product" data-index="${index}">حذف</button>
-            </div>
-        `;
-        catalog.appendChild(productDiv);
-    });
-}
-
-// Fetch products from Firebase Realtime Database
-function getProductsFromDatabase() {
-    const productsRef = database.ref('products');
-    productsRef.on('value', (snapshot) => {
-        const products = [];
-        snapshot.forEach(childSnapshot => {
-            products.push(childSnapshot.val());
-        });
-        displayProducts(products);
-    });
-}
-*/
 function displayProducts(products) {
     const catalog = document.getElementById('catalog');
     catalog.innerHTML = '';
@@ -358,68 +321,6 @@ document.getElementById('checkout-form').addEventListener('submit', (e) => {
         document.querySelector('html').scrollIntoView({ behavior: 'smooth', block: 'end' });
     }, 500); // Delay to ensure the order summary is generated before scrolling
 });
-
-/*
-// Function to generate a new page and capture the content as an image
-async function generateNewPageAndCapture(name, phone, cart) {
-    const currentDate = new Date();
-    const formattedDate = `${String(currentDate.getDate()).padStart(2, '0')}/${String(currentDate.getMonth() + 1).padStart(2, '0')}/${currentDate.getFullYear()}`;
-    const orderSummary = document.createElement('div');
-    orderSummary.style.border = '2px solid black';  // Add border around the content
-    orderSummary.style.padding = '20px';  // Add padding inside the border
-    orderSummary.style.maxWidth = '600px';  // Limit the width for better readability
-    orderSummary.style.margin = '20px auto';  // Center the content
-    orderSummary.style.backgroundColor = '#fff';  // Ensure background color is white
-
-    orderSummary.innerHTML = `
-        <h2 style="text-align: center; font-family: 'Amiri', sans-serif;">ملخص الطلب</h2>
-        <p style="text-align: right; font-family: 'Amiri', sans-serif;">الاسم: ${name}</p>
-        <p style="text-align: right; font-family: 'Amiri', sans-serif;">رقم الهاتف: ${phone}</p>
-        <p style="text-align: right; font-family: 'Amiri', sans-serif;">التاريخ: ${formattedDate}</p> <!-- Add current date here -->
-
-        <table style="width: 100%; border-collapse: collapse; text-align: center; font-family: 'Amiri', sans-serif;">
-            <thead>
-                <tr>
-                    <th style="border: 1px solid black; padding: 10px;">الصورة</th>
-                    <th style="border: 1px solid black; padding: 10px;">اسم المنتج</th>
-                    <th style="border: 1px solid black; padding: 10px;">السعر</th>
-                    <th style="border: 1px solid black; padding: 10px;">الكمية</th>
-                </tr>
-            </thead>
-            <tbody>
-                ${cart.map(item => `
-                    <tr>
-                        <td style="border: 1px solid black; padding: 10px;">
-                            <img src="${item.image}" alt="${item.name}" style="width: 50px; height: 50px; object-fit: contain;">
-                        </td>
-                        <td style="border: 1px solid black; padding: 10px;">${item.name}</td>
-                        <td style="border: 1px solid black; padding: 10px;">₪  ${item.price.toFixed(2)}</td>
-                        <td style="border: 1px solid black; padding: 10px;">${item.quantity}</td>
-                    </tr>
-                `).join('')}
-            </tbody>
-        </table>
-        <p id="total-price" style="text-align: right; font-weight: bold; font-family: 'Amiri', sans-serif; margin-top: 20px;">
-            السعر الإجمالي: ₪${cart.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2)}
-        </p>
-    `;
-
-    // Append the summary to the body temporarily
-    document.body.appendChild(orderSummary);
-
-    // Create and style the share button to appear near the recipe
-    const shareButton = document.createElement('button');
-    shareButton.textContent = 'مشاركة الطلبية مع علا';
-    shareButton.style.display = 'block';
-    shareButton.style.margin = '20px auto';  // Center the button
-    shareButton.style.padding = '10px';
-    shareButton.style.backgroundColor = '#4CAF50'; // Green background
-    shareButton.style.color = 'white'; // White text
-    shareButton.style.border = 'none';
-    shareButton.style.borderRadius = '5px'; // Rounded corners
-    shareButton.style.cursor = 'pointer';  // Pointer cursor on hover
-    document.body.appendChild(shareButton);
-*/
     function loadImagesAndCapture() {
         const images = Array.from(orderSummary.querySelectorAll('img'));
         const promises = images.map(img => {
@@ -435,49 +336,6 @@ async function generateNewPageAndCapture(name, phone, cart) {
         });
         return Promise.all(promises);
     }
-
-/*
-    shareButton.addEventListener('click', async () => {
-        console.log("Share button clicked");
-        await loadImagesAndCapture();
-
-        // Use html2canvas to capture the recipe as an image
-        html2canvas(orderSummary, {
-            scale: 2, // Ensure high resolution for the image
-            useCORS: true, // Ensure cross-origin images are captured
-        }).then(canvas => {
-            const image = canvas.toDataURL('image/png');
-            const blob = dataURItoBlob(image);
-            const file = new File([blob], 'order_summary.png', { type: 'image/png' });
-
-            // Use Web Share API to share the image
-            if (navigator.share) {
-                navigator.share({
-                    title: 'Order Summary',
-                    text: 'مرحبا علا! هذا طلبي شكرا!',
-                    files: [file],
-                }).catch(error => console.error('Error sharing:', error));
-            } else {
-                alert('Your browser does not support the Web Share API.');
-            }
-        }).catch(error => {
-            console.error('Error capturing the screen:', error);
-        });
-    });
-}
-
-// Convert data URI to Blob
-function dataURItoBlob(dataURI) {
-    const byteString = atob(dataURI.split(',')[1]);
-    const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
-    const arrayBuffer = new ArrayBuffer(byteString.length);
-    const uintArray = new Uint8Array(arrayBuffer);
-    for (let i = 0; i < byteString.length; i++) {
-        uintArray[i] = byteString.charCodeAt(i);
-    }
-    return new Blob([arrayBuffer], { type: mimeString });
-}
-*/
 async function generateNewPageAndCapture(name, phone, cart) {
     const currentDate = new Date();
     const formattedDate = `${String(currentDate.getDate()).padStart(2, '0')}/${String(currentDate.getMonth() + 1).padStart(2, '0')}/${currentDate.getFullYear()}`;
@@ -528,13 +386,6 @@ async function generateNewPageAndCapture(name, phone, cart) {
         useCORS: true, // Ensure cross-origin images are captured
     }).then(canvas => {
         const image = canvas.toDataURL('image/png');
-        /*
-        // Download the image automatically
-        const link = document.createElement('a');
-        link.href = image;
-        link.download = 'order_summary.png';  // File name for the saved image
-        link.click();  // Trigger the download
-*/
         // Show a popup that the image has been saved
         displayShareButton(orderSummary, image);
         setTimeout(() => {

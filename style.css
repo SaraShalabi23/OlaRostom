@@ -40,6 +40,8 @@ header h1 {
     border: 1px solid #494747;
     padding: 1rem;
     text-align: center;
+    border-radius: 25px;
+    box-shadow: #333;
 }
 
 .product-image {
@@ -119,7 +121,7 @@ form button[type="submit"] {
 
 @media (max-width: 600px) {
     button {
-        width: 100%; 
+        width: 40%; 
         padding: 12px 20px;
     }
 }
