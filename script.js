@@ -48,7 +48,7 @@ function displayProducts(products) {
             <h2>${product.name}</h2>
             <p class="product-price">₪${product.price}</p>
             <p>${product.description}</p>
-            <button class="add-to-cart">🛒إضافة إلى العربة</button>
+            <button class="add-to-cart">🛒إضافة للعربة</button>
             <div class="admin-actions" style="display: none;">
                 <button class="edit-product" data-key="${product.key}">تعديل</button>
                 <button class="delete-product" data-key="${product.key}">حذف</button>

@@ -121,7 +121,7 @@ form button[type="submit"] {
 
 @media (max-width: 600px) {
     button {
-        width: 40%; 
+        width: 60%; 
         padding: 12px 20px;
     }
 }
