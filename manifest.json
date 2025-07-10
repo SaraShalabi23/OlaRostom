@@ -3,7 +3,7 @@
     "short_name": "كعك عُلا",
     "start_url": "./index.html",
     "display": "standalone",
-    "background_color": "#ffffff",
+    "background_color": "#d0819bb8",
     "theme_color": "#d0819b",
     "orientation": "portrait",
     "icons": [
