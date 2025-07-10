@@ -1,0 +1,22 @@
+{
+    "name": "كعك صحي عُلا",
+    "short_name": "كعك عُلا",
+    "start_url": "./index.html",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#d0819b",
+    "orientation": "portrait",
+    "icons": [
+      {
+        "src": "images/ola.png",
+        "sizes": "192x192",
+        "type": "image/png"
+      },
+      {
+        "src": "images/ola.png",
+        "sizes": "512x512",
+        "type": "image/png"
+      }
+    ]
+  }
+  

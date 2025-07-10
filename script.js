@@ -34,7 +34,12 @@ function getAllProductNames() {
 window.onload = () => {
     getProductsFromDatabase();
     getAllProductNames(); // Fetch product names for search
-
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('service-worker.js')
+        .then(() => console.log('Service Worker Registered'))
+        .catch(error => console.error('Service Worker Registration Failed:', error));
+    }
+    
 };
 function displayProducts(products) {
     const catalog = document.getElementById('catalog');
