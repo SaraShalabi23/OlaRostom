@@ -241,7 +241,7 @@ form button[type="submit"] {
     width: 110px;
     padding: 7px;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 25px;
     margin-bottom: 10px;
 }
 
@@ -268,7 +268,7 @@ form button[type="submit"] {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    background-color: #4CAF50;
+    background-color: #ffffff;
     color: white;
     border: none;
     border-radius: 50%;
@@ -284,7 +284,7 @@ form button[type="submit"] {
 }
 
 .floating-cart-btn:hover {
-    background-color: #45a049;
+    background-color: #ffffff;
 }
 .toast {
     visibility: hidden;
@@ -329,7 +329,7 @@ form button[type="submit"] {
     position: fixed;  /* Ensure the button is fixed on the screen */
     bottom: 20px;  /* Adjust the distance from the bottom */
     right: 20px;  /* Adjust the distance from the right */
-    background-color: #4CAF50; /* Button background color */
+    background-color: #ffffff; /* Button background color */
     color: white; /* Button text color */
     padding: 15px;  /* Button padding for mobile and desktop */
     border-radius: 50%;  /* Make the button round */
