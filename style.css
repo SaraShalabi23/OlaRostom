@@ -283,6 +283,8 @@ form button[type="submit"] {
     cursor: pointer;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     z-index: 1000; /* Ensures the button stays on top */
+    pointer-events: none;
+
 }
 
 .floating-cart-btn:hover {
@@ -340,6 +342,8 @@ form button[type="submit"] {
     cursor: pointer;  /* Show pointer when hovering over the button */
     z-index: 1000;  /* Ensure the button stays on top of other elements */
     transition: background-color 0.3s ease;
+    pointer-events: none;
+
 }
 
 #scroll-to-cart:hover {
