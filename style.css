@@ -29,6 +29,7 @@ header h1 {
     margin-bottom: 12px;
 }
 
+
 #catalog {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -36,17 +37,32 @@ header h1 {
     padding: 1rem;
 }
 
+
 .product {
-    border: 1px solid #494747;
+    background-color: #f0f0f01e;
+    border: 1px solid #3d3b3b;
     padding: 1rem;
     text-align: center;
     border-radius: 25px;
-    box-shadow: #333;
+    box-shadow: #333333;
+    
 }
 
+
+
 .product-image {
-    width: 100px;
-    height: 100px;
+    width: 120px;
+    height: 120px;
+}
+.product h2 {
+    font-size: 17px;
+    margin: 10px 0 5px 0;
+}
+
+.product-price {
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 8px;
 }
 
 #cart {
