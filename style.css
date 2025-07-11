@@ -55,13 +55,13 @@ header h1 {
     height: 120px;
 }
 .product h2 {
-    font-size: 17px;
-    margin: 10px 0 5px 0;
+    font-size: 20px;
+    margin: 5px 0 5px 0;
 }
 
 .product-price {
     font-weight: bold;
-    font-size: 14px;
+    font-size: 17px;
     margin-bottom: 8px;
 }
 
