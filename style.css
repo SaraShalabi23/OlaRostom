@@ -341,7 +341,7 @@ form button[type="submit"] {
 }
 
 #scroll-to-cart:hover {
-    background-color: #45a049; /* Slightly change background on hover */
+    background-color: #e2e2e2; /* Slightly change background on hover */
 }
 
 /* Make adjustments for smaller screens */
